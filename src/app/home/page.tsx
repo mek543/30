@@ -13,14 +13,12 @@ export default function HomePage() {
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    // Check if user is logged in
     const user = localStorage.getItem('user');
     if (!user) {
-      // Redirect to login page if not logged in
       router.push('/');
       return;
     }
-    
+
     try {
       const userData = JSON.parse(user);
       setUsername(userData.username);
@@ -31,50 +29,43 @@ export default function HomePage() {
   }, [router]);
 
   const handleLogout = () => {
-    // Clear user data from localStorage
     localStorage.removeItem('user');
-    
-    // Redirect to login page
     router.push('/');
   };
 
-  if (!username) {
-    return null; // Don't render anything while checking authentication
-  }
+  if (!username) return null;
 
   return (
     <Layout className="min-h-screen">
       <Header className="flex justify-between items-center bg-white px-6 shadow-md">
+        {/* Left section: Logout Button */}
         <div className="flex items-center">
-          <Title level={4} className="m-0">My App</Title>
-        </div>
-        <div className="flex items-center">
-          <Avatar icon={<UserOutlined />} className="mr-2" />
-          <Text className="mr-4">{username}</Text>
-          <Button 
-            icon={<LogoutOutlined />} 
+          <Button
+            icon={<LogoutOutlined />}
             onClick={handleLogout}
+            type="primary"
+            danger
+            className="mr-4"
           >
             Logout
           </Button>
+          <Title level={4} className="m-0 text-blue-600">My App</Title>
+        </div>
+
+        {/* Right section: User Info */}
+        <div className="flex items-center">
+          <Avatar icon={<UserOutlined />} className="mr-2 bg-blue-500" />
+          <Text className="font-medium text-gray-700">{username}</Text>
         </div>
       </Header>
-      
-      <Content className="p-6">
-        <Card className="max-w-2xl mx-auto mt-8 shadow-md">
-          <Title level={2}>Welcome, {username}!</Title>
-          <Text className="text-lg">You have successfully logged in to the application.</Text>
-          
+
+      <Content className="p-6 bg-gray-100">
+        <Card className="max-w-2xl mx-auto mt-8 shadow-lg rounded-xl border border-gray-200">
+          <Title level={2} className="text-blue-700">ຍິນດີຕ້ອນຮັບ, {username}ສຸດຫຼໍ່</Title>
+
           <div className="mt-6">
-            <Title level={4}>What's Next?</Title>
-            <Text>This is a simple demo showing a login page that redirects to a home page.</Text>
-            <Text className="block mt-2">
-              In a real application, you would connect this to a real authentication system with a database and API.
-            </Text>
           </div>
-        </Card>console.log('HomePage component rendered');
-console.log('Username:', username);
-console.log('User data:', localStorage.getItem('user'));
+        </Card>
       </Content>
     </Layout>
   );
