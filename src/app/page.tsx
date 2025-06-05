@@ -18,7 +18,7 @@ export default function LoginPage() {
     setTimeout(() => {
       const { email, password } = values;
 
-      if (email === 'me@mail.com' && password === '12345678') {
+      if (email === 'me@mail.com' && password === '00000000') {
         localStorage.setItem('user', JSON.stringify({ username: email }));
         message.success('Login successful!');
         router.push('/home');
